@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone');
             $table->date('dob');
-            $table->foreignId('college_id')->constrained()->onDelete('cascade'); // Foreign key to colleges
+            $table->foreignId('college_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
