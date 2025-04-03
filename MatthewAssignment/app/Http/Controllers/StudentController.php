@@ -33,14 +33,14 @@ class StudentController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:students',
-            'phone' => 'required',
+            'phone' => ['required', 'regex:/^[0-9]{8}$/'],
             'dob' => 'required|date',
             'college_id' => 'required|exists:colleges,id',
         ]);
 
         Student::create($request->all());
 
-        return redirect()->route('students.index');
+        return redirect()->route('students.index')->with('success', 'Student added successfully!');
     }
 
     public function edit(Student $student)
@@ -54,20 +54,20 @@ class StudentController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:students,email,' . $student->id,
-            'phone' => 'required',
+            'phone' => ['required', 'regex:/^[0-9]{8}$/'],
             'dob' => 'required|date',
             'college_id' => 'required|exists:colleges,id',
         ]);
 
         $student->update($request->all());
 
-        return redirect()->route('students.index');
+        return redirect()->route('students.index')->with('success', 'Student updated successfully!');
     }
 
     public function destroy(Student $student)
     {
         $student->delete();
 
-        return redirect()->route('students.index');
+        return redirect()->route('students.index')->with('success', 'Student deleted successfully!');
     }
 }

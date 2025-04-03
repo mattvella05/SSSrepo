@@ -34,7 +34,7 @@ class CollegeController extends Controller
 
         College::create($request->all());
 
-        return redirect()->route('colleges.index');
+        return redirect()->route('colleges.index')->with('success', 'College added successfully!');
     }
 
     public function edit(College $college)
@@ -51,13 +51,13 @@ class CollegeController extends Controller
 
         $college->update($request->all());
 
-        return redirect()->route('colleges.index');
+        return redirect()->route('colleges.index')->with('success', 'College updated successfully!');
     }
 
     public function destroy(College $college)
     {
         $college->delete();
 
-        return redirect()->route('colleges.index');
+        return redirect()->route('colleges.index')->with('success', 'College deleted successfully!');
     }
 }
