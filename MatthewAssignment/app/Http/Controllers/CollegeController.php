@@ -7,10 +7,17 @@ use Illuminate\Http\Request;
 
 class CollegeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $colleges = College::all();
-        return view('colleges.index', compact('colleges'));
+        $colleges = College::query();
+
+        if ($request->sort === 'name') {
+            $colleges->orderBy('name');
+        }
+
+        return view('colleges.index', [
+            'colleges' => $colleges->get()
+        ]);
     }
 
     public function create()

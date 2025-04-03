@@ -11,8 +11,12 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $students = Student::when($request->college, function ($query) use ($request) {
-            return $query->where('college_id', $request->college);
-        })->get();
+                return $query->where('college_id', $request->college);
+            })
+            ->when($request->sort == 'name', function ($query) {
+                return $query->orderBy('name');
+            })
+            ->get();
 
         $colleges = College::all();
         return view('students.index', compact('students', 'colleges'));
